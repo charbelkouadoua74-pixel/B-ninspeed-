@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06140f">
+<title>BeninSpeed • Test de connexion</title>
+<style>
+:root{
+  --bg:#06140f;--bg2:#0a1e17;--surface:rgba(15,35,28,.82);--surface2:rgba(20,45,36,.7);
+  --green:#21e675;--green2:#11bd5b;--mint:#8dffc0;--text:#f4fff8;--muted:#91a99d;
+  --line:rgba(141,255,192,.12);--danger:#ff6b6b;--shadow:0 24px 60px rgba(0,0,0,.28);
+  --r:24px;
+}
+*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:
+radial-gradient(circle at 50% -10%,rgba(33,230,117,.12),transparent 34%),linear-gradient(145deg,var(--bg),var(--bg2));overflow-x:hidden}
+button{font:inherit}.app{position:relative;z-index:1;width:min(100%,520px);margin:auto;padding:22px 18px 30px}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;opacity:.22}.orb-a{width:190px;height:190px;background:#12c967;top:15%;left:-100px}.orb-b{width:220px;height:220px;background:#0d8bff;right:-130px;bottom:8%}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.brand{display:flex;gap:11px;align-items:center}.brand-mark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#27ef7c,#0ba84f);box-shadow:0 8px 24px rgba(33,230,117,.24);font-size:22px}.brand-name{font-size:20px;font-weight:850;letter-spacing:-.6px}.brand-name span{color:var(--green)}.brand-sub{font-size:11px;color:var(--muted);margin-top:1px}.live-dot{display:flex;align-items:center;gap:7px;color:#8fb1a1;font-size:9px;font-weight:800;letter-spacing:1.1px}.live-dot i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(33,230,117,.08);animation:pulse 1.8s infinite}
+.hero{margin-bottom:18px}.hero-kicker{font-size:10px;font-weight:850;letter-spacing:1.8px;color:var(--green);margin-bottom:7px}.hero h1{font-size:28px;line-height:1.08;letter-spacing:-1.2px;margin:0 0 8px}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.tester-card{position:relative;padding:20px 15px 19px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(160deg,rgba(18,43,34,.92),rgba(9,25,19,.88));box-shadow:var(--shadow);overflow:hidden}.tester-card:before{content:"";position:absolute;inset:-60% 20% auto;height:200px;background:rgba(33,230,117,.08);filter:blur(50px);pointer-events:none}
+.gauge-wrap{position:relative;width:245px;height:245px;margin:0 auto}.gauge{width:100%;height:100%;transform:rotate(-90deg)}.gauge circle{fill:none;stroke-width:13}.gauge-track{stroke:rgba(141,255,192,.09)}.gauge-progress{stroke:var(--green);stroke-linecap:round;stroke-dasharray:553;stroke-dashoffset:553;transition:stroke-dashoffset .35s ease,filter .3s ease;filter:drop-shadow(0 0 8px rgba(33,230,117,.35))}
+.gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center}.gauge-value{font-size:43px;font-weight:900;letter-spacing:-2px;line-height:1}.gauge-unit{font-size:12px;color:var(--mint);font-weight:750;margin-top:5px}.gauge-phase{font-size:9px;letter-spacing:1.6px;color:var(--muted);font-weight:850;margin-top:9px}
+.status-row{display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:#d2e3da;margin:-2px 0 15px}.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(33,230,117,.08)}.status-dot.active{animation:pulse 1s infinite}.status-dot.error{background:var(--danger)}
+.test-button{width:100%;border:0;border-radius:17px;padding:16px 18px;background:linear-gradient(180deg,#2af17f,#14c862);color:#03170b;font-size:16px;font-weight:900;box-shadow:0 12px 30px rgba(20,200,98,.24);cursor:pointer;display:flex;justify-content:center;align-items:center;gap:10px;transition:transform .09s ease,filter .18s ease,box-shadow .18s ease}.test-button:hover{filter:brightness(1.06);box-shadow:0 15px 34px rgba(20,200,98,.32)}.test-button:active{transform:scale(.965);filter:brightness(.88);box-shadow:0 6px 15px rgba(20,200,98,.2)}.test-button:focus-visible{outline:3px solid rgba(141,255,192,.45);outline-offset:3px}.test-button:disabled{cursor:wait;opacity:.78;transform:none}.button-icon{font-size:13px}.tap-hint{text-align:center;margin:9px 0 0;font-size:10px;color:#718b7f}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.metric-card{position:relative;padding:15px;border-radius:20px;border:1px solid var(--line);background:var(--surface);min-height:132px;transition:transform .25s ease,border-color .25s ease,background .25s ease}.metric-card.active{border-color:rgba(33,230,117,.42);transform:translateY(-2px);background:rgba(17,49,37,.9)}.metric-card.done{border-color:rgba(33,230,117,.2)}.metric-card.unavailable{opacity:.65}.metric-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(33,230,117,.1);color:var(--green);font-weight:900;margin-bottom:12px}.metric-label{font-size:9px;color:var(--muted);font-weight:850;letter-spacing:1.2px}.metric-value{display:flex;align-items:baseline;gap:4px;margin-top:4px}.metric-value strong{font-size:25px;letter-spacing:-1px}.metric-value span{font-size:10px;color:var(--muted)}.metric-note{font-size:10px;color:#708a7e;margin-top:4px}
+.connection-card{display:flex;align-items:center;gap:12px;margin-top:12px;padding:14px 15px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}.connection-icon{font-size:21px}.connection-copy{display:flex;flex-direction:column;gap:2px;flex:1}.connection-copy span{font-size:9px;letter-spacing:1.1px;color:var(--muted);font-weight:850}.connection-copy strong{font-size:13px}.server-badge{font-size:8px;font-weight:850;letter-spacing:.8px;color:#8fd4ad;padding:6px 8px;border-radius:8px;background:rgba(33,230,117,.08)}
+.tips-card{margin-top:12px;padding:15px 16px;border-radius:20px;background:rgba(10,27,21,.6);border:1px solid rgba(141,255,192,.08)}.tips-title{font-size:11px;font-weight:850;margin-bottom:8px}.tips-card ul{margin:0;padding-left:17px;color:var(--muted);font-size:10px;line-height:1.7}
+footer{text-align:center;color:#60786d;font-size:9px;margin:18px 0 0}footer span{color:var(--green);margin:0 4px}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}@media(max-width:360px){.app{padding-left:13px;padding-right:13px}.hero h1{font-size:25px}.gauge-wrap{width:225px;height:225px}.metric-card{padding:13px}.metric-value strong{font-size:22px}}
+
+</style>
+</head>
+<body>
+<div class="bg-orb orb-a"></div><div class="bg-orb orb-b"></div>
+<main class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"><span>⚡</span></div>
+    <div><div class="brand-name">Benin<span>Speed</span></div><div class="brand-sub">Testez votre connexion</div></div>
+  </div>
+  <div class="live-dot"><i></i><span>EN LIGNE</span></div>
+</header>
+<section class="hero">
+  <div class="hero-kicker">VITESSE INTERNET</div>
+  <h1>Découvrez votre vraie vitesse.</h1>
+  <p>Mesurez la latence, le téléchargement et l’envoi de données.</p>
+</section>
+<section class="tester-card">
+  <div class="gauge-wrap">
+    <svg class="gauge" viewBox="0 0 220 220" aria-label="Jauge de vitesse">
+      <circle class="gauge-track" cx="110" cy="110" r="88"></circle>
+      <circle id="gaugeProgress" class="gauge-progress" cx="110" cy="110" r="88"></circle>
+    </svg>
+    <div class="gauge-center">
+      <div id="gaugeValue" class="gauge-value">0</div>
+      <div id="gaugeUnit" class="gauge-unit">Mbps</div>
+      <div id="gaugePhase" class="gauge-phase">PRÊT</div>
+    </div>
+  </div>
+  <div class="status-row"><span id="statusDot" class="status-dot"></span><span id="statusLine">Prêt à tester</span></div>
+  <button id="testButton" class="test-button" type="button"><span class="button-icon">▶</span><span id="buttonText">Tester ma connexion</span></button>
+  <p class="tap-hint">Appuyez pour lancer un test réel</p>
+</section>
+<section class="metrics">
+<article id="metric-ping" class="metric-card pending"><div class="metric-icon">⌁</div><div class="metric-label">PING</div><div class="metric-value"><strong id="pingValue">—</strong><span>ms</span></div><div class="metric-note">Latence</div></article>
+<article id="metric-download" class="metric-card pending"><div class="metric-icon">↓</div><div class="metric-label">DOWNLOAD</div><div class="metric-value"><strong id="downloadValue">—</strong><span>Mbps</span></div><div class="metric-note">Réception</div></article>
+<article id="metric-upload" class="metric-card pending"><div class="metric-icon">↑</div><div class="metric-label">UPLOAD</div><div class="metric-value"><strong id="uploadValue">—</strong><span>Mbps</span></div><div class="metric-note">Envoi</div></article>
+<article id="metric-jitter" class="metric-card pending"><div class="metric-icon">≈</div><div class="metric-label">JITTER</div><div class="metric-value"><strong id="jitterValue">—</strong><span>ms</span></div><div class="metric-note">Stabilité</div></article>
+</section>
+<section class="connection-card"><div class="connection-icon">📶</div><div class="connection-copy"><span>CONNEXION</span><strong id="connectionType">Détection…</strong></div><div class="server-badge">MODE DÉMO</div></section>
+<section class="tips-card"><div class="tips-title">Pour un résultat plus fiable</div><ul><li>Fermez les téléchargements en arrière-plan.</li><li>Restez proche de votre routeur en Wi‑Fi.</li><li>Les résultats peuvent varier selon le réseau.</li></ul></section>
+<footer>BeninSpeed <span>•</span> Mesure indicative de votre connexion</footer>
+</main>
+<script>
+/* Interface autonome. Le test réseau réel est activé quand la page est servie par le serveur BeninSpeed. */
+const standaloneMode = location.protocol === "content:" || location.protocol === "file:";
+if (standaloneMode) {
+  // Keep the UI responsive in direct-file mode without inventing speed results.
+  // Ping is measured against the browser environment only when a remote endpoint exists.
+  document.getElementById("serverBadge").textContent = "MODE HORS LIGNE";
+}
+</script>
+<script>
+(() => {
+  "use strict";
+
+  const CONFIG = {
+    pingSamples: 7,
+    serverBase: "",
+    downloadSizes: [1, 5, 10, 20],
+    uploadSizes: [1, 5, 10],
+    minTransferSeconds: 0.9,
+    maxTransferSeconds: 6,
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const el = {
+    button: $("testButton"), buttonText: $("buttonText"),
+    status: $("statusLine"), statusDot: $("statusDot"),
+    gaugeProgress: $("gaugeProgress"), gaugeValue: $("gaugeValue"),
+    gaugeUnit: $("gaugeUnit"), gaugePhase: $("gaugePhase"),
+    ping: $("pingValue"), download: $("downloadValue"),
+    upload: $("uploadValue"), jitter: $("jitterValue"),
+    connection: $("connectionType"),
+    metrics: {
+      ping: $("metric-ping"), download: $("metric-download"),
+      upload: $("metric-upload"), jitter: $("metric-jitter")
+    }
+  };
+
+  const C = 2 * Math.PI * 88;
+  let running = false;
+
+  function setProgress(f) {
+    const x = Math.max(0, Math.min(1, f));
+    el.gaugeProgress.style.strokeDashoffset = String(C * (1 - x));
+  }
+
+  function setGauge(value, unit, phase) {
+    el.gaugeValue.textContent = value;
+    el.gaugeUnit.textContent = unit;
+    el.gaugePhase.textContent = phase;
+  }
+
+  function status(text, active = false, error = false) {
+    el.status.textContent = text;
+    el.statusDot.classList.toggle("active", active);
+    el.statusDot.classList.toggle("error", error);
+  }
+
+  function metric(name, state) {
+    const node = el.metrics[name];
+    node.classList.remove("pending", "active", "done", "unavailable");
+    node.classList.add(state);
+  }
+
+  function connectionType() {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!c) return "Non détectable sur ce navigateur";
+    if (c.type === "wifi") return "Wi‑Fi";
+    if (c.type === "cellular") return c.effectiveType ? `Réseau mobile • ${c.effectiveType.toUpperCase()}` : "Réseau mobile";
+    return c.effectiveType ? `Réseau estimé • ${c.effectiveType.toUpperCase()}` : "Connexion détectée";
+  }
+
+  function reset() {
+    for (const k of ["ping","download","upload","jitter"]) {
+      el[k].textContent = "—";
+      metric(k, "pending");
+    }
+    setProgress(0);
+    setGauge("0", "Mbps", "PRÊT");
+    status("Prêt à tester");
+  }
+
+  async function ping(onSample) {
+    const values = [];
+    for (let i = 0; i < CONFIG.pingSamples; i++) {
+      const t = performance.now();
+      const r = await fetch(`${CONFIG.serverBase}/api/ping?x=${Date.now()}-${i}`, {
+        cache: "no-store",
+        headers: {"Cache-Control":"no-cache"}
+      });
+      if (!r.ok) throw new Error("Le serveur de test ne répond pas.");
+      await r.text();
+      const ms = performance.now() - t;
+      values.push(ms);
+      onSample?.(values);
+    }
+    return values;
+  }
+
+  function avg(a) { return a.reduce((s,x)=>s+x,0)/a.length; }
+  function jitter(a) {
+    if (a.length < 2) return 0;
+    let s=0; for(let i=1;i<a.length;i++) s += Math.abs(a[i]-a[i-1]);
+    return s/(a.length-1);
+  }
+
+  async function downloadOnce(bytes, onProgress) {
+    const t0 = performance.now();
+    const r = await fetch(`${CONFIG.serverBase}/api/download?bytes=${bytes}&t=${Date.now()}`, {cache:"no-store"});
+    if (!r.ok) throw new Error("Échec du téléchargement de test.");
+    const reader = r.body?.getReader();
+    let received = 0;
+    if (reader) {
+      while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        received += value.byteLength;
+        onProgress?.(received / bytes);
+      }
+    } else {
+      const b = await r.arrayBuffer();
+      received = b.byteLength;
+      onProgress?.(1);
+    }
+    const seconds = (performance.now()-t0)/1000;
+    return {mbps:(received*8)/seconds/1e6, seconds, bytes:received};
+  }
+
+  async function adaptiveDownload() {
+    let best = null;
+    for (const mb of CONFIG.downloadSizes) {
+      const bytes = mb * 1024 * 1024;
+      const result = await downloadOnce(bytes);
+      best = result;
+      if (result.seconds >= CONFIG.minTransferSeconds || mb === CONFIG.downloadSizes.at(-1)) break;
+    }
+    return best;
+  }
+
+  function randomBytes(n) {
+    const chunk = new Uint8Array(Math.min(n, 1024*1024));
+    crypto.getRandomValues(chunk);
+    const parts = [];
+    let left=n;
+    while(left>0){ const size=Math.min(left,chunk.length); parts.push(chunk.subarray(0,size)); left-=size; }
+    return new Blob(parts,{type:"application/octet-stream"});
+  }
+
+  async function uploadOnce(bytes) {
+    const body = randomBytes(bytes);
+    const t0 = performance.now();
+    const r = await fetch(`${CONFIG.serverBase}/api/upload?t=${Date.now()}`, {
+      method:"POST", body, cache:"no-store", headers:{"Content-Type":"application/octet-stream"}
+    });
+    if (!r.ok) throw new Error("Échec de l’envoi de test.");
+    const result = await r.json();
+    const seconds = (performance.now()-t0)/1000;
+    const sent = result.bytes || bytes;
+    return {mbps:(sent*8)/seconds/1e6, seconds, bytes:sent};
+  }
+
+  async function adaptiveUpload() {
+    let best=null;
+    for(const mb of CONFIG.uploadSizes){
+      best=await uploadOnce(mb*1024*1024);
+      if(best.seconds>=CONFIG.minTransferSeconds || mb===CONFIG.uploadSizes.at(-1)) break;
+    }
+    return best;
+  }
+
+  async function run() {
+    if (running) return;
+    running = true;
+    el.button.disabled = true;
+    el.buttonText.textContent = "Test en cours…";
+    reset();
+
+    try {
+      status("Connexion au serveur de mesure…", true);
+      setGauge("…","Mbps","CONNEXION");
+      setProgress(.05);
+      await new Promise(r=>setTimeout(r,180));
+
+      metric("ping","active"); metric("jitter","active");
+      status("Mesure du ping…", true); setGauge("…","ms","PING"); setProgress(.08);
+      const samples = await ping(vals => {
+        const latest = vals.at(-1);
+        el.gaugeValue.textContent = Math.round(latest);
+        setProgress(.08 + .22*(vals.length/CONFIG.pingSamples));
+      });
+      const p = avg(samples), j = jitter(samples);
+      el.ping.textContent = Math.round(p);
+      el.jitter.textContent = Math.round(j);
+      metric("ping","done"); metric("jitter","done");
+
+      metric("download","active"); status("Mesure du téléchargement…", true);
+      setGauge("…","Mbps","DOWNLOAD"); setProgress(.36);
+      const d = await adaptiveDownload();
+      el.download.textContent = d.mbps.toFixed(1);
+      metric("download","done"); setProgress(.68);
+
+      metric("upload","active"); status("Mesure de l’envoi…", true);
+      setGauge("…","Mbps","UPLOAD"); setProgress(.72);
+      const u = await adaptiveUpload();
+      el.upload.textContent = u.mbps.toFixed(1);
+      metric("upload","done"); setProgress(.94);
+
+      setGauge(d.mbps.toFixed(1),"Mbps","DOWNLOAD");
+      status("Test terminé", false, false);
+      setProgress(1);
+    } catch (e) {
+      console.error(e);
+      status(e.message || "Une erreur est survenue.", false, true);
+      setGauge("—","Mbps","ERREUR");
+    } finally {
+      running = false;
+      el.button.disabled = false;
+      el.buttonText.textContent = "Relancer le test";
+      el.button.style.transform = "scale(1)";
+    }
+  }
+
+  el.connection.textContent = connectionType();
+  reset();
+  el.button.addEventListener("click", run);
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  c?.addEventListener?.("change", () => el.connection.textContent = connectionType());
+})();
+
+</script>
+</body>
+</html>
